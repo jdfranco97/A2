@@ -139,7 +139,7 @@ def product_edit(request, pk):
                           {'products': product})
     else:
         # edit
-        form = ProductForm(instance=customer)
+        form = ProductForm(instance=product)
     return render(request, 'crm/product_edit.html', {'form': form})
 
 
@@ -152,19 +152,19 @@ def product_delete(request, pk):
 
 @login_required
 def product_new(request):
-   if request.method == "POST":
-       form = ProductForm(request.POST)
-       if form.is_valid():
-           product = form.save(commit=False)
-           product.created_date = timezone.now()
-           product.save()
-           product = Product.objects.filter(created_date__lte=timezone.now())
-           return render(request, 'crm/product_list.html',
-                         {'products': products})
-   else:
-       form = ProductForm()
-       # print("Else")
-   return render(request, 'crm/product_new.html', {'form': form})
+    if request.method == "POST":
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.created_date = timezone.now()
+            product.save()
+            product = Product.objects.filter(created_date__lte=timezone.now())
+            return render(request, 'crm/product_list.html',
+                          {'products': products})
+    else:
+        form = ProductForm()
+        # print("Else")
+    return render(request, 'crm/product_new.html', {'form': form})
 
 
 @login_required
